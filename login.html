@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+    <link rel="stylesheet" href="./login.css">
+
+
+
+</head>
+
+<body>
+    <p>人之在世，如白鹭与泡影，虚无！</p>
+    <div class="back">
+
+        <form class="continer" action="./index.html">
+            <ul>
+                <li>
+                    <h2 class="head">密码登录</h2>
+                </li>
+                <li>
+                    <input class="phone" type="text" placeholder="输入手机号码  ">
+                </li>
+                <li>
+                    <input class="code" type="password" placeholder="输入密码 ">
+
+                </li>
+                <a class="a1" style="color:aqua;font-size: 10px;" href="#">短信登录</a>
+                <li class="li2" style="color: aqua;font-size: 10px;"><a href="javascript">忘记密码</a></li>
+            </ul>
+            <button id="bbb">确认登录</button>
+            <a href="./register.html" style="color: wheat;font-size: 10px;margin-left: 10px;">去注册</a>
+
+        </form>
+    </div>
+    <script>
+        // 获取表单元素
+        const form = document.querySelector('form');
+
+        // 获取输入框
+        const phone = document.querySelector('.phone');
+        const code = document.querySelector('.code');
+
+        // 定义正则表达式
+        const reg0 = /^[0-9]{1,11}$/;  // 手机号码正则（1-11位数字）
+        const reg = /^[a-zA-Z0-9-_]{6,16}$/;  // 验证码正则（6-16位字母、数字、下划线、破折号）
+
+        // 创建错误提示元素
+        const phoneError = document.createElement('div');
+        phoneError.classList.add('error');
+        const codeError = document.createElement('div');
+        codeError.classList.add('error');
+        // 为输入框添加 blur 事件监听器（失去焦点时验证）
+        phone.addEventListener('blur', function () {
+            const value = this.value;
+            if (!reg0.test(value)) {
+                phoneError.textContent = '请输入1至11位的数字';
+                this.after(phoneError);  // 在输入框后插入错误提示
+            } else {
+                phoneError.textContent = '';  // 清除错误提示
+            }
+        });
+
+        code.addEventListener('blur', function () {
+            const value = this.value;
+            if (!reg.test(value)) {
+                codeError.textContent = '请输入6至16位的英文、数字、下划线或破折号';
+                this.after(codeError);  // 在输入框后插入错误提示
+            } else {
+                codeError.textContent = '';  // 清除错误提示
+            }
+        });
+
+        // 表单提交时验证输入
+        form.addEventListener('submit', function (event) {
+            let isValid = true;  // 假设表单验证通过
+
+            // 验证手机号
+            if (!reg0.test(phone.value)) {
+                phoneError.textContent = '请输入1至11位的数字';
+                phone.after(phoneError);
+                isValid = false;
+            }
+
+            // 验证验证码
+            if (!reg.test(code.value)) {
+                codeError.textContent = '请输入6至16位的英文、数字、下划线或破折号';
+                code.after(codeError);
+                isValid = false;
+            }
+
+            // 如果验证失败，阻止表单提交
+            if (!isValid) {
+                event.preventDefault();  // 阻止默认提交行为
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
